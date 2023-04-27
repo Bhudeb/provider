@@ -1,13 +1,13 @@
 // import required essentials
-const http = require('http');
-const express = require('express');
-var cors = require('cors');
+import { createServer } from 'http';
+import express, { json } from 'express';
+import cors from 'cors';
 // import `items` from `routes` folder 
-const itemsRouter = require('./routes/items');
+import itemsRouter from './routes/items.js'
 
 // create new app
 const app = express();
-app.use(express.json());
+app.use(json());
 // use it before all route definitions
 // allowing below URL to access these APIs end-points
 // you can replace this URL(http://localhost:8100) with your
@@ -25,7 +25,7 @@ app.use('/', function(req, res) {
     res.send('node-ex-api works :-)');
 });
 
-const server = http.createServer(app);
+const server = createServer(app);
 const port = 8000;
 server.listen(port);
 console.debug('Server listening on port ' + port);

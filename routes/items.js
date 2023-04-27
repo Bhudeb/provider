@@ -1,14 +1,12 @@
 // import required essentials
-const express = require('express');
+import { Router } from 'express';
+import {sendMessage} from '../kafka.js'
 // create new router
-const router = express.Router();
+const router = Router();
 // create a JSON data array
 let data = [
-    { id: 1, title: 'Create a project',  order: 1, completed: true, createdOn: new Date() },
-    { id: 2, title: 'Take a cofféé',     order: 2, completed: true, createdOn: new Date() },
-    { id: 3, title: 'Write new article', order: 3, completed: true, createdOn: new Date() },
-    { id: 4, title: 'Walk toward home', order: 4, completed: false, createdOn: new Date() },
-    { id: 5, title: 'Have some dinner', order: 5, completed: false, createdOn: new Date() },
+    { id: 1, title: 'Create a project',  order: 1, completed: true},
+    { id: 2, title: 'Take a cofféé', order: 2, completed: true}
 ];
 
 // HTTP methods ↓↓ starts here.
@@ -16,8 +14,8 @@ let data = [
 // READ
 // this api end-point of an API returns JSON data array
 router.get('/', function (req, res) {
+    sendMessage(data)
     res.status(200).json(data);
-    console.log('Data fetched...')
 });
 
 // READ
@@ -30,6 +28,11 @@ router.get('/:id', function (req, res) {
     });
     // if object found return an object else return 404 not-found
     if (found) {
+        console.log('---------------')
+        console.log(found)
+
+        
+        sendMessage(found)
         res.status(200).json(found);
     } else {
         res.sendStatus(404);
@@ -65,6 +68,7 @@ router.post('/', function (req, res) {
     // return with status 201
     // 201 means Created. The request has been fulfilled and 
     // has resulted in one or more new resources being created. 
+    sendMessage('Data Created',newItem)
     res.status(201).json(newItem);
 });
 
@@ -127,4 +131,4 @@ router.delete('/:id', function (req, res) {
 
 // module.exports is an object included in every JS file of Node.js
 // application, whatever we assign to module.exports will be exposed as a module. 
-module.exports = router;
+export default router;

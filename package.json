@@ -2,10 +2,20 @@
     "name": "node-ex-api",
     "version": "1.0.0",
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "verifyContract": "mocha provider.spec.js",
+        "verifyKafkaContract": "mocha providerKafka.spec.js",
+        "canDeploy": "node canIDeploy.js"
     },
+    "type": "module",
     "dependencies": {
+        "@pact-foundation/pact": "^11.0.2",
+        "@pact-foundation/pact-node": "^10.17.7",
+        "@rplan/pact-broker-cli": "^0.3.2",
         "cors": "^2.8.5",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "kafkajs": "^2.2.4",
+        "mocha": "^10.2.0",
+        "pg": "^8.10.0"
     }
 }
